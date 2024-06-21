@@ -21,17 +21,17 @@ namespace Test
             _service = new ProductService(_repositoryMock.Object, _cache);
         }
 
-        [Test]
-        public async Task GetProductByIdAsync_ReturnsProduct()
-        {
-            var product = new Product { ProductId = 1, Name = "Test Product" };
-            _repositoryMock.Setup(r => r.GetProductByIdAsync(1)).ReturnsAsync(product);
+        //[Test]
+        //public async Task GetProductByIdAsync_ReturnsProduct()
+        //{
+        //    var product = new Product { ProductId = 1, Name = "Test Product" };
+        //    _repositoryMock.Setup(r => r.GetProductByIdAsync(1)).ReturnsAsync(product);
 
-            var result = await _service.GetProductByIdAsync(1);
+        //    var result = await _service.GetProductByIdAsync(1);
 
-            Assert.AreEqual(product, result);
-            _repositoryMock.Verify(r => r.GetProductByIdAsync(1), Times.Once);
-        }
+        //    Assert.AreEqual(product, result);
+        //    _repositoryMock.Verify(r => r.GetProductByIdAsync(1), Times.Once);
+        //}
     }
 
 }

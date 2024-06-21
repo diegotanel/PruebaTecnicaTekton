@@ -1,15 +1,17 @@
 ﻿using MediatR;
 using Models;
 using Repositories;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared.DTOs;
 
 namespace ApplicationServices.Products.Commands
 {
-    public class CreateProductCommand : IRequest<Product>
+    public class CreateProductCommand : IRequest<ProductDto>
     {
         public string Name { get; set; }
         public int Status { get; set; }
@@ -19,7 +21,7 @@ namespace ApplicationServices.Products.Commands
         public decimal Discount { get; set; }
     }
 
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
     {
         private readonly IProductService _productService;
 
@@ -28,7 +30,7 @@ namespace ApplicationServices.Products.Commands
             _productService = productService;
         }
 
-        public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {
@@ -41,8 +43,10 @@ namespace ApplicationServices.Products.Commands
             };
 
             await _productService.AddProductAsync(product);
+            var productDto = _productService.MapProductToDto(product);
+            productDto.Result.StatusName = product.Status == 1 ? "Active" : "Inactive";
 
-            return product;
+            return productDto.Result;
         }
     }
 

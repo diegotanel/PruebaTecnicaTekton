@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Models;
 using Repositories;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationServices.Products.Queries
 {
-    public class GetProductByIdQuery : IRequest<Product>
+    public class GetProductByIdQuery : IRequest<ProductDto>
     {
         public int ProductId { get; set; }
     }
 
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
     {
         private readonly IProductService _productService;
 
@@ -23,7 +24,7 @@ namespace ApplicationServices.Products.Queries
             _productService = productService;
         }
 
-        public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             return await _productService.GetProductByIdAsync(request.ProductId);
         }

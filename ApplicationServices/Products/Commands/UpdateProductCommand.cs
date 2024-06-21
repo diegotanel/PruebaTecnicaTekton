@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared.DTOs;
 
 namespace ApplicationServices.Products.Commands
 {
-    public class UpdateProductCommand : IRequest<Product>
+    public class UpdateProductCommand : IRequest<ProductDto>
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
@@ -20,7 +21,7 @@ namespace ApplicationServices.Products.Commands
         public decimal Discount { get; set; }
     }
 
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Product>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductDto>
     {
         private readonly IProductService _productService;
 
@@ -29,25 +30,26 @@ namespace ApplicationServices.Products.Commands
             _productService = productService;
         }
 
-        async Task<Product> IRequestHandler<UpdateProductCommand, Product>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        async Task<ProductDto> IRequestHandler<UpdateProductCommand, ProductDto>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _productService.GetProductByIdAsync(request.ProductId);
+            var productDto = await _productService.GetProductByIdAsync(request.ProductId);
 
-            if (product == null)
+            if (productDto == null)
             {
                 throw new KeyNotFoundException("Product not found");
             }
 
-            product.Name = request.Name;
-            product.Status = request.Status;
-            product.Stock = request.Stock;
-            product.Description = request.Description;
-            product.Price = request.Price;
-            product.Discount = request.Discount;
+            productDto.ProductId = request.ProductId;
+            productDto.Name = request.Name;
+            productDto.StatusName = request.Status.ToString();
+            productDto.Stock = request.Stock;
+            productDto.Description = request.Description;
+            productDto.Price = request.Price;
+            productDto.Discount = request.Discount;
 
-            await _productService.UpdateProductAsync(product);
+            await _productService.UpdateProductAsync(productDto);
 
-            return product;
+            return productDto;
         }
     }
 
