@@ -16,7 +16,7 @@ namespace Shared.External
 
     namespace ApiClientLibrary
     {
-        public class MockApi
+        public class MockApi : IApiExterna
         {
             private readonly HttpClient _httpClient;
 

@@ -50,3 +50,5 @@
 /api/Products/5 - 685,1826 ms
 /api/Products/5 - 18,0081 ms
 /api/Products - 13486,8773 ms
+/api/Products - 1909,9623 ms
+/api/Products/9 - 19,497 ms

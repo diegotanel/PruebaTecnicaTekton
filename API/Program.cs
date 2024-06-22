@@ -6,6 +6,8 @@ using Repositories;
 using Shared.Middleware;
 using MediatR;
 using System.Reflection;
+using Shared.External;
+using Shared.External.ApiClientLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddDbContext<ProductContext>(o => o.UseSqlite(conn));
 
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IApiExterna, MockApi>();
 builder.Services.AddLazyCache();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(ApplicationServices.ProductService))));
 

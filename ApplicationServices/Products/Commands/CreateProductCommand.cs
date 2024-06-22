@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Shared.DTOs;
 using Shared.External.ApiClientLibrary;
+using Shared.External;
 
 namespace ApplicationServices.Products.Commands
 {
@@ -25,10 +26,12 @@ namespace ApplicationServices.Products.Commands
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
     {
         private readonly IProductService _productService;
+        private readonly IApiExterna _api;
 
-        public CreateProductCommandHandler(IProductService productService)
+        public CreateProductCommandHandler(IProductService productService, IApiExterna api)
         {
             _productService = productService;
+            _api = api;
         }
 
         public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -39,14 +42,12 @@ namespace ApplicationServices.Products.Commands
                 Status = request.Status,
                 Stock = request.Stock,
                 Description = request.Description,
-                Price = request.Price,
-                //Discount = Convert.ToDecimal(descuento)
+                Price = request.Price
             };
 
             await _productService.AddProductAsync(product);
             string apiUrl = $"https://6675ff2ba8d2b4d072f21eb8.mockapi.io/api/preciodedescuento/numerosaleatorios/{product.ProductId}";
-            var mock = new MockApi();
-            string descuento = await mock.GetApiDataAsync(apiUrl);
+            string descuento = await _api.GetApiDataAsync(apiUrl);
             ProductDto productDto;
             if (descuento != null)
             {
