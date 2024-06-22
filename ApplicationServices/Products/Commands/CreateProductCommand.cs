@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shared.DTOs;
+using Shared.External.ApiClientLibrary;
 
 namespace ApplicationServices.Products.Commands
 {
@@ -39,14 +40,27 @@ namespace ApplicationServices.Products.Commands
                 Stock = request.Stock,
                 Description = request.Description,
                 Price = request.Price,
-                Discount = request.Discount
+                //Discount = Convert.ToDecimal(descuento)
             };
 
             await _productService.AddProductAsync(product);
-            var productDto = _productService.MapProductToDto(product);
-            productDto.Result.StatusName = product.Status == 1 ? "Active" : "Inactive";
+            string apiUrl = $"https://6675ff2ba8d2b4d072f21eb8.mockapi.io/api/preciodedescuento/numerosaleatorios/{product.ProductId}";
+            var mock = new MockApi();
+            string descuento = await mock.GetApiDataAsync(apiUrl);
+            ProductDto productDto;
+            if (descuento != null)
+            {
+                productDto = await _productService.GetProductByIdAsync(product.ProductId);
+                productDto.Discount = Convert.ToDecimal(descuento);
+                await _productService.UpdateProductAsync(productDto);
+                return productDto;
+            }
+            else
+            {
+                productDto = await _productService.MapProductToDto(product);
+                return productDto;
+            }
 
-            return productDto.Result;
         }
     }
 

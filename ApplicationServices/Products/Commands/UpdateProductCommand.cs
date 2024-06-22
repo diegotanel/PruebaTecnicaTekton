@@ -45,7 +45,6 @@ namespace ApplicationServices.Products.Commands
             productDto.Stock = request.Stock;
             productDto.Description = request.Description;
             productDto.Price = request.Price;
-            productDto.Discount = request.Discount;
 
             await _productService.UpdateProductAsync(productDto);
 

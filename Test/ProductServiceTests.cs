@@ -3,6 +3,7 @@ using LazyCache;
 using Moq;
 using Repositories;
 using Models;
+using Shared.External.ApiClientLibrary;
 
 namespace Test
 {
@@ -32,6 +33,15 @@ namespace Test
         //    Assert.AreEqual(product, result);
         //    _repositoryMock.Verify(r => r.GetProductByIdAsync(1), Times.Once);
         //}
+
+        [Test]
+        public async Task TestConectionMockAPI()
+        {
+            //string apiUrl = "https://6675ff2ba8d2b4d072f21eb8.mockapi.io/api/preciodedescuento/numerosaleatorios/1";
+            string apiUrl = "https://api.generadordni.es/v2/bank/card";
+            var mock = new MockApi();
+            var datos = mock.GetApiDataAsync(apiUrl);
+        }
     }
 
 }

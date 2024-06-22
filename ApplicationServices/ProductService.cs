@@ -76,6 +76,7 @@ namespace ApplicationServices
             productDto.Description = product.Description;
             productDto.Price = product.Price;
             productDto.Discount = product.Discount;
+            productDto.FinalPrice = product.FinalPrice;
             return productDto;
         }
     }
