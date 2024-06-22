@@ -1,10 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ApplicationServices.Products.Commands;
+using LazyCache;
 using Models;
 using Moq;
 using NUnit.Framework;
 using Shared.DTOs;
+using Shared.External;
 
 namespace ApplicationServices.Tests.Products.Commands
 {
@@ -12,13 +14,15 @@ namespace ApplicationServices.Tests.Products.Commands
     public class CreateProductCommandHandlerTests
     {
         private Mock<IProductService> _productServiceMock;
+        private Mock<IApiExterna> _apiMock;
         private CreateProductCommandHandler _handler;
 
         [SetUp]
         public void SetUp()
         {
             _productServiceMock = new Mock<IProductService>();
-            _handler = new CreateProductCommandHandler(_productServiceMock.Object);
+            _apiMock = new Mock<IApiExterna>();
+            _handler = new CreateProductCommandHandler(_productServiceMock.Object, _apiMock.Object);
         }
 
         [Test]
@@ -31,12 +35,14 @@ namespace ApplicationServices.Tests.Products.Commands
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m,
-                Discount = 10m
+                Price = 100m
             };
 
+            _apiMock.Setup(s => s.GetApiDataAsync(It.IsAny<string>())).ReturnsAsync("urlmock");
             _productServiceMock.Setup(s => s.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
             _productServiceMock.Setup(s => s.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(new ProductDto());
+            _productServiceMock.Setup(s => s.UpdateProductAsync(It.IsAny<ProductDto>()));
+
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -56,8 +62,7 @@ namespace ApplicationServices.Tests.Products.Commands
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m,
-                Discount = 10m
+                Price = 100m
             };
 
             var productDto = new ProductDto { ProductId = 1 };
@@ -82,8 +87,7 @@ namespace ApplicationServices.Tests.Products.Commands
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m,
-                Discount = 10m
+                Price = 100m
             };
 
             var productDto = new ProductDto { ProductId = 1, Discount = 5m };

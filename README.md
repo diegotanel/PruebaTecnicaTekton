@@ -1,1 +1,38 @@
-# PruebaTecnicaTekton
+# ProductAPI
+
+## Descripción
+API REST para la gestión de productos utilizando .NET 8, siguiendo principios SOLID y patrones de diseño CQRS.
+
+## Arquitectura de capas
+Se ha separado las responsabilidades en distintas capas
+- Controllers para la gestión de peticiones HTTP
+- Servicios y modelos para definir las reglas de negocio
+- Repositorios para manejar el acceso a la bases de datos
+- Las responsabilidades transversales se implementan mediante los Middleware
+
+## Patrones y Arquitectura
+- **Repository Pattern** para la capa de acceso a datos.
+- **CQRS** para separar las operaciones de lectura y escritura.
+- **DTOs** para transferir datos entre capas.
+- **LazyCache** para el caching de productos.
+- **Middleware** para el logging del tiempo de respuesta.
+- **TDD** para asegurar la calidad del código.
+- **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces
+
+## Base de datos
+Configurar la base de datos en `appsettings.json`.
+Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor catidad de dependencias posibles.
+
+## Swagger
+Para visualizar e interacctuar con las APIs en desarrollo
+
+## API Externa
+Se utiliza MockApi para obtención de datos externos.
+En este caso, se obtiene cómo respuesta un número que se utiliza para el precio de descuento.
+
+## Cache
+Se ha implementado LazyCache para conservar el producto en cache. El tiempo de expiración es de 5 minutos.
+
+## Logueo
+Se almacena en un archivo local el logueo de tiempo de respuesta de las peticiones.
+
