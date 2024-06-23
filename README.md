@@ -15,13 +15,13 @@ Se ha separado las responsabilidades en distintas capas
 - **CQRS** para separar las operaciones de lectura y escritura.
 - **DTOs** para transferir datos entre capas.
 - **LazyCache** para el caching de productos.
-- **Middleware** para el logging del tiempo de respuesta.
+- **Middleware** para el logs del tiempo de respuesta de las peticiones y excepciones.
 - **TDD** para asegurar la calidad del código.
 - **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces
 - **Aspect-oriented programming (AOP)** para las responsabilidades transversales
 
 ## Base de datos
-Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor catidad de dependencias posibles.
+Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor cantidad de dependencias posibles.
 
 ## Configuraciones
 Las configuraciones de la API son configurables por medio del archivo `appsettings.json`.
@@ -35,7 +35,7 @@ Se utiliza Entity Framework cómo ORM para gestionar el acceso a la base de dato
 
 ## Swagger
 Para visualizar e interactuar con las APIs en desarrollo.
-Se ha documentado los Endpoints cona el tipo de respuesta y el código de estado HTTP que retorna.
+Se ha documentado los Endpoints con el tipo de respuesta y el código de estado HTTP que retorna.
 
 ## API Externa
 Se utiliza MockApi para obtención de datos externos.
@@ -43,7 +43,11 @@ En este caso, se obtiene cómo respuesta un número del 1 al 99, que se utiliza 
 
 ## Cache
 Se ha implementado LazyCache para conservar el producto en cache. 
-El tiempo de expiración seteado es de 5 minutos.
+El tiempo de expiración esta configurado en 5 minutos.
 
 ## Logs
 Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.
+
+## Excepciones
+Se almacena en un archivo local todas las excepciones junto con el stacktrace.
+

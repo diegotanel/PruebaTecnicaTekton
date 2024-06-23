@@ -41,7 +41,6 @@ namespace Shared.External
                 }
                 catch (HttpRequestException e)
                 {
-                    File.AppendAllText("error.txt", $"{e.Message}");
                     throw;
                 }
             }

@@ -67,7 +67,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseMiddleware<RequestTimingMiddleware>();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 
