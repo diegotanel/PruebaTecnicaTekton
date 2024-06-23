@@ -9,6 +9,8 @@ using System.Reflection;
 using Shared.External;
 using Shared.External.ApiClientLibrary;
 using Microsoft.OpenApi.Models;
+using Shared.Configs;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +48,7 @@ builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IApiExterna, MockApi>();
 builder.Services.AddLazyCache();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(ApplicationServices.ProductService))));
+MockApiUrl.Url = builder.Configuration.GetValue<string>("MockApiUrl:Url");
 
 var app = builder.Build();
 

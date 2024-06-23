@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Shared.DTOs;
 using Shared.External.ApiClientLibrary;
 using Shared.External;
+using Shared.Configs;
 
 namespace ApplicationServices.Products.Commands
 {
@@ -45,7 +45,7 @@ namespace ApplicationServices.Products.Commands
             };
 
             await _productService.AddProductAsync(product);
-            string apiUrl = $"https://6675ff2ba8d2b4d072f21eb8.mockapi.io/api/preciodedescuento/numerosaleatorios/{product.ProductId}";
+            string apiUrl = MockApiUrl.Url + product.ProductId;
             string descuento = await _api.GetApiDataAsync(apiUrl);
             ProductDto productDto;
             if (descuento != null)

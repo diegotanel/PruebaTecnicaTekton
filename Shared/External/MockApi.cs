@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Shared.External
 {
+    using Microsoft.Extensions.Options;
+    using Shared.Configs;
     using Shared.DTOs;
     using System;
     using System.IO;
@@ -29,7 +32,7 @@ namespace Shared.External
             {
                 try
                 {
-                    _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response = await _httpClient.GetAsync(url);
                     response.EnsureSuccessStatusCode();
                     var jsonValores = await response.Content.ReadAsStringAsync();

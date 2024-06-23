@@ -29,10 +29,11 @@ Se utiliza Entity Framework cómo ORM para gestionar el acceso a la base de dato
 
 ## Swagger
 Para visualizar e interactuar con las APIs en desarrollo.
+Se ha documentado los Endpoints cona el tipo de respuesta y el código de estado HTTP que retorna.
 
 ## API Externa
 Se utiliza MockApi para obtención de datos externos.
-En este caso, se obtiene cómo respuesta un número que se utiliza para el precio de descuento.
+En este caso, se obtiene cómo respuesta un número del 1 al 99, que se utiliza para el precio de descuento.
 
 ## Cache
 Se ha implementado LazyCache para conservar el producto en cache. 
