@@ -8,6 +8,7 @@ using MediatR;
 using System.Reflection;
 using Shared.External;
 using Shared.External.ApiClientLibrary;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var info = new OpenApiInfo()
+{
+    Title = "API Producto",
+    Version = "v1",
+    Description = "API Producto para prueba técnica",
+    Contact = new OpenApiContact()
+    {
+        Name = "Diego Tanel",
+        Email = "dtanel@gmail.com",
+    }
+
+};
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", info);
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+
+
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ProductContext>(o => o.UseSqlite(conn));
 

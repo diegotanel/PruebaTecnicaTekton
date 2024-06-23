@@ -6,6 +6,7 @@ using ApplicationServices.Products.Queries;
 using MediatR;
 using Shared.External.ApiClientLibrary;
 using System.Text.Json;
+using Shared.DTOs;
 
 namespace API.Controllers
 {
@@ -21,14 +22,32 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Crea un nuevo producto.
+        /// </summary>
+        /// <param name="command">Datos del producto.</param>
+        /// <returns>Producto</returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateProduct(CreateProductCommand command)
         {
             var product = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetProductById), new { id = product.ProductId }, product);
         }
 
+        /// <summary>
+        /// Actualiza un producto existente.
+        /// </summary>
+        /// <param name="id">ID del producto.</param>
+        /// <param name="command">Datos actualizados del producto.</param>
+        /// <returns>Producto</returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateProduct(int id, UpdateProductCommand command)
         {
             if (id != command.ProductId)
@@ -36,11 +55,20 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            await _mediator.Send(command);
-            return NoContent();
+            var product = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetProductById), new { id = product.ProductId }, product);
         }
 
+        /// <summary>
+        /// Obtiene un producto por ID.
+        /// </summary>
+        /// <param name="id">ID del producto.</param>
+        /// <returns>Producto</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetProductById(int id)
         {
             var query = new GetProductByIdQuery { ProductId = id };
@@ -49,6 +77,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
+
             return Ok(product);
         }
     }

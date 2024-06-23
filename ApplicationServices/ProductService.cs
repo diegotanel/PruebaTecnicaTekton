@@ -39,13 +39,7 @@ namespace ApplicationServices
         public async Task UpdateProductAsync(ProductDto productDto)
         {
             Product product = await _cache.GetOrAddAsync($"productDto_{productDto.ProductId}", async () => await _repository.GetProductByIdAsync(productDto.ProductId), TimeSpan.FromMinutes(5));
-
-            //if (product == null)
-            //{
-            //    return null;
-            //}
             this.MapDtoToProduct(ref product, productDto);
-
             await _repository.UpdateProductAsync(product);
             await this.UpdateCacheProduct(product);
         }
