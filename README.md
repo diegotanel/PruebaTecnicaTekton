@@ -13,6 +13,7 @@ Se ha separado las responsabilidades en distintas capas
 ## Patrones y Arquitectura
 - **Repository Pattern** para la capa de acceso a datos.
 - **CQRS** para separar las operaciones de lectura y escritura.
+- **Mediator** para centraliza la comunicación de los objetos.
 - **DTOs** para transferir datos entre capas.
 - **LazyCache** para el caching de productos.
 - **Middleware** para el logs del tiempo de respuesta de las peticiones y excepciones.
@@ -22,6 +23,7 @@ Se ha separado las responsabilidades en distintas capas
 
 ## Base de datos
 Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor cantidad de dependencias posibles.
+Se utiliza inyección de dependencias para la implementación de la base de datos, por lo que es trivial cambiarla por otra distinta.
 
 ## Configuraciones
 Las configuraciones de la API son configurables por medio del archivo `appsettings.json`.
@@ -44,10 +46,15 @@ En este caso, se obtiene cómo respuesta un número del 1 al 99, que se utiliza 
 ## Cache
 Se ha implementado LazyCache para conservar el producto en cache. 
 El tiempo de expiración esta configurado en 5 minutos.
+Se utiliza inyección de dependencias para la implementación del cache, por lo que es trivial cambiarlo por otro distinto.
 
 ## Logs
 Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.
+La implementación es por medio de un Middelware, por lo qué es facilmente remplazarlo por otro tipo de log.
 
 ## Excepciones
 Se almacena en un archivo local todas las excepciones junto con el stacktrace.
+La implementación es por medio de un Middelware, por lo qué es facilmente remplazarlo por otro tipo de log.
 
+# Validaciones de parámetros de entrada los endpoints
+Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
