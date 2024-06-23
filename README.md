@@ -21,8 +21,14 @@ Se ha separado las responsabilidades en distintas capas
 - **Aspect-oriented programming (AOP)** para las responsabilidades transversales
 
 ## Base de datos
-Configurar la base de datos en `appsettings.json`.
 Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor catidad de dependencias posibles.
+
+## Configuraciones
+Las configuraciones de la API son configurables por medio del archivo `appsettings.json`.
+Las configuraciones actuales son:
+- Base de datos
+- Expiración de cache
+- URL de MockApi
 
 ## ORM
 Se utiliza Entity Framework cómo ORM para gestionar el acceso a la base de datos. 
@@ -37,7 +43,7 @@ En este caso, se obtiene cómo respuesta un número del 1 al 99, que se utiliza 
 
 ## Cache
 Se ha implementado LazyCache para conservar el producto en cache. 
-El tiempo de expiración es de 5 minutos.
+El tiempo de expiración seteado es de 5 minutos.
 
-## Logueo
+## Logs
 Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.

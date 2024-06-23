@@ -3,6 +3,7 @@ using LazyCache;
 using Repositories;
 using MediatR;
 using Shared.DTOs;
+using Shared.Configs;
 
 namespace ApplicationServices
 {
@@ -17,12 +18,12 @@ namespace ApplicationServices
         {
             _repository = repository;
             _cache = cache;
-            _cacheExpire = TimeSpan.FromMinutes(5);
+            _cacheExpire = TimeSpan.FromMinutes(CacheConfig.Expiration);
         }
 
         public async Task<ProductDto> GetProductByIdAsync(int id)
         {
-            var product = await _cache.GetOrAddAsync($"product_{id}", async () => await _repository.GetProductByIdAsync(id), TimeSpan.FromMinutes(5));
+            var product = await _cache.GetOrAddAsync($"product_{id}", async () => await _repository.GetProductByIdAsync(id), _cacheExpire);
             if (product == null)
             {
                 return null;
@@ -38,7 +39,7 @@ namespace ApplicationServices
 
         public async Task UpdateProductAsync(ProductDto productDto)
         {
-            Product product = await _cache.GetOrAddAsync($"productDto_{productDto.ProductId}", async () => await _repository.GetProductByIdAsync(productDto.ProductId), TimeSpan.FromMinutes(5));
+            Product product = await _cache.GetOrAddAsync($"productDto_{productDto.ProductId}", async () => await _repository.GetProductByIdAsync(productDto.ProductId), _cacheExpire);
             this.MapDtoToProduct(ref product, productDto);
             await _repository.UpdateProductAsync(product);
             await this.UpdateCacheProduct(product);

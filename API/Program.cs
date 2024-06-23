@@ -49,6 +49,7 @@ builder.Services.AddScoped<IApiExterna, MockApi>();
 builder.Services.AddLazyCache();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(ApplicationServices.ProductService))));
 MockApiUrl.Url = builder.Configuration.GetValue<string>("MockApiUrl:Url");
+CacheConfig.Expiration = builder.Configuration.GetValue<int>("CacheConfig:Expiration");
 
 var app = builder.Build();
 
