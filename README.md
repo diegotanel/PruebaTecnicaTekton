@@ -4,11 +4,11 @@
 API REST para la gestión de productos utilizando .NET 8, siguiendo principios SOLID y patrones de diseño CQRS.
 
 ## Arquitectura de capas
-Se ha separado las responsabilidades en distintas capas
-- Controllers para la gestión de peticiones HTTP
-- Servicios y modelos para definir las reglas de negocio
-- Repositorios para manejar el acceso a la bases de datos
-- Capa de soporte para las responsabilidades transversales
+Se ha separado las responsabilidades en distintas capas:
+- Controllers para la gestión de peticiones HTTP.
+- Servicios y modelos para definir las reglas de negocio.
+- Repositorios para manejar el acceso a la bases de datos.
+- Capa de soporte para las responsabilidades transversales.
 
 ## Patrones y Arquitectura
 - **Repository Pattern** para la capa de acceso a datos.
@@ -18,8 +18,8 @@ Se ha separado las responsabilidades en distintas capas
 - **LazyCache** para el caching de productos.
 - **Middleware** para el logs del tiempo de respuesta de las peticiones y excepciones.
 - **TDD** para asegurar la calidad del código.
-- **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces
-- **Aspect-oriented programming (AOP)** para las responsabilidades transversales
+- **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces.
+- **Aspect-oriented programming (AOP)** para las responsabilidades transversales.
 
 ## Base de datos
 Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor cantidad de dependencias posibles.
@@ -50,11 +50,11 @@ Se utiliza inyección de dependencias para la implementación del cache, por lo 
 
 ## Logs
 Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.
-La implementación es por medio de un Middelware, por lo qué es facilmente remplazarlo por otro tipo de log.
+La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
 ## Excepciones
 Se almacena en un archivo local todas las excepciones junto con el stacktrace.
-La implementación es por medio de un Middelware, por lo qué es facilmente remplazarlo por otro tipo de log.
+La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
-# Validaciones de parámetros de entrada los endpoints
-Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
+# Validaciones de parámetros de entrada de los endpoints
+Se ha utilizado los Data Annotations para validar datos enviados a los endpoints.
