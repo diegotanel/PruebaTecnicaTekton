@@ -23,7 +23,7 @@ Se ha separado las responsabilidades en distintas capas:
 - **Domain Driven Design** para estructurar el proyecto centralizado en el dominio del negocio.
 
 ## Clean code
-Se aplico Clean code en la solución. Se realizaron las verificaciones utilizando lint.
+Se siguieron los principios de Clean Code en la solución. Se realizaron las verificaciones utilizando lint.
 
 ## Base de datos
 Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor cantidad de dependencias posibles.
@@ -67,9 +67,9 @@ Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
 ## Estructura
 Endpoints de la API
 - API/Controllers/ProductsController
--- CreateProduct
--- UpdateProduct
--- GetProductById
+. CreateProduct
+. UpdateProduct
+. GetProductById
 
 Utilizando el patrón Mediator, lanzamos un evento que lo capturan los handlers.
 Por un lado tenemos los commands que realizan modificaciones en la información y por otro los querys.
@@ -77,28 +77,28 @@ De esta forma, aplicamos el patron CQRS.
 También tenemos un servicio de Dominio requerido para cumplir los casos de uso.
 
 - ApplicationServices
--- Queries
---- GetProductByIdQuery
--- Commands
---- CreateProductCommands
---- UpdateProductCommands
--- ProductService
+.. Queries
+... GetProductByIdQuery
+.. Commands
+... CreateProductCommands
+... UpdateProductCommands
+.. ProductService
 
-Los modelos son los que representan las entidades de negocio.
+Los modelos son los que representan las entidades de negocio:
 - Models
--- Product
+.. Product
 
-La capa de base de datos se encuentra abstraida por medio de patrón Repositorio
+La capa de base de datos se encuentra abstraida por medio de patrón Repositorio:
 - Repositories
--- ProductRepository
+.. ProductRepository
 
-Dentro del proyecto Shared se encuentra todo lo que es transversal a la solución.
+Dentro del proyecto Shared se encuentra todo lo que es transversal a la solución:
 - Configs
 - DTOs
 - MockApi
 - Middleware
 
-En Test se encuentran todos los unit test de la solución.
+En el proyecto Test se encuentran todos los unit test de la solución.
 
 
 
