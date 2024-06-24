@@ -20,6 +20,7 @@ Se ha separado las responsabilidades en distintas capas:
 - **TDD** para asegurar la calidad del código.
 - **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces.
 - **Aspect-oriented programming (AOP)** para las responsabilidades transversales.
+- **Domain Driven Design** para estructurar el proyecto centralizado en el dominio del negocio.
 
 ## Clean code
 Se aplico Clean code en la solución. Se realizaron las verificaciones utilizando lint.
