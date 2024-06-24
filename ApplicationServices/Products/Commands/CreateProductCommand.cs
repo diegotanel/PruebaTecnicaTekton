@@ -60,12 +60,11 @@ namespace ApplicationServices.Products.Commands
                 productDto = await _productService.GetProductByIdAsync(product.ProductId);
                 productDto.Discount = Convert.ToDecimal(descuento);
                 await _productService.UpdateProductAsync(productDto);
-                return productDto;
+                return await _productService.GetProductByIdAsync(product.ProductId);
             }
             else
             {
-                productDto = await _productService.MapProductToDto(product);
-                return productDto;
+                return await _productService.MapProductToDto(product);
             }
 
         }
