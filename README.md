@@ -54,12 +54,51 @@ Se utiliza inyección de dependencias para la implementación del cache, por lo 
 En un ambiente distribuido de microservicios sería una buena solución utilizar Redis.
 
 ## Logs
-Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.
+Se almacena en el archivo local 'logs.txt' el logueo con el tiempo de respuesta de las peticiones.
 La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
 ## Excepciones
-Se almacena en un archivo local todas las excepciones junto con el stacktrace.
+Se almacena en un archivo local 'exceptions' todas las excepciones junto con el stacktrace.
 La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
-# Validaciones de parámetros de entrada de los endpoints
+## Validaciones de parámetros de entrada de los endpoints
 Se ha utilizado los Data Annotations para validar datos enviados a los endpoints.
+
+## Estructura
+Endpoints de la API
+- API/Controllers/ProductsController
+-- CreateProduct
+-- UpdateProduct
+-- GetProductById
+
+Utilizando el patrón Mediator, lanzamos un evento que lo capturan los handlers.
+Por un lado tenemos los commands que realizan modificaciones en la información y por otro los querys.
+De esta forma, aplicamos el patron CQRS.
+También tenemos un servicio de Dominio requerido para cumplir los casos de uso.
+
+- ApplicationServices
+-- Queries
+--- GetProductByIdQuery
+-- Commands
+--- CreateProductCommands
+--- UpdateProductCommands
+-- ProductService
+
+Los modelos son los que representan las entidades de negocio.
+- Models
+-- Product
+
+La capa de base de datos se encuentra abstraida por medio de patrón Repositorio
+- Repositories
+-- ProductRepository
+
+Dentro del proyecto Shared se encuentra todo lo que es transversal a la solución.
+- Configs
+- DTOs
+- MockApi
+- Middleware
+
+En Test se encuentran todos los unit test de la solución.
+
+
+
