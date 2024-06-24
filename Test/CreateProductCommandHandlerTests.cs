@@ -1,9 +1,9 @@
-﻿using ApplicationServices;
+﻿using Moq;
 using ApplicationServices.Products.Commands;
 using Models;
-using Moq;
 using Shared.DTOs;
 using Shared.External;
+using ApplicationServices;
 
 namespace Test
 {
@@ -23,7 +23,7 @@ namespace Test
         }
 
         [Test]
-        public async Task Handle_ShouldAddProduct_WhenCommandIsValid()
+        public async Task Handle_ValidCommand_ShouldReturnProductDtoWithDiscount()
         {
             // Arrange
             var command = new CreateProductCommand
@@ -32,25 +32,45 @@ namespace Test
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m
+                Price = 100.0m
             };
 
-            _apiMock.Setup(s => s.GetApiDataAsync(It.IsAny<string>())).ReturnsAsync("urlmock");
-            _productServiceMock.Setup(s => s.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
-            _productServiceMock.Setup(s => s.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(new ProductDto());
-            _productServiceMock.Setup(s => s.UpdateProductAsync(It.IsAny<ProductDto>()));
+            var product = new Product
+            {
+                ProductId = 1,
+                Name = "Test Product",
+                Status = 1,
+                Stock = 10,
+                Description = "Test Description",
+                Price = 100.0m
+            };
 
+            var productDto = new ProductDto
+            {
+                ProductId = 1,
+                Name = "Test Product",
+                StatusName = "Active",
+                Stock = 10,
+                Description = "Test Description",
+                Price = 100.0m,
+                Discount = 10.0m
+            };
+
+            _productServiceMock.Setup(x => x.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
+            _apiMock.Setup(x => x.GetApiDataAsync(It.IsAny<string>())).ReturnsAsync("10");
+            _productServiceMock.Setup(x => x.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(productDto);
+            _productServiceMock.Setup(x => x.UpdateProductAsync(It.IsAny<ProductDto>())).Returns(Task.CompletedTask);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);
-            _productServiceMock.Verify(s => s.AddProductAsync(It.IsAny<Product>()), Times.Once);
+            Assert.AreEqual(productDto, result);
         }
 
         [Test]
-        public async Task Handle_ShouldCallGetProductByIdAsync_WhenProductIsAdded()
+        public async Task Handle_ValidCommand_ShouldReturnProductDtoWithoutDiscount()
         {
             // Arrange
             var command = new CreateProductCommand
@@ -59,45 +79,39 @@ namespace Test
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m
+                Price = 100.0m
             };
 
-            var productDto = new ProductDto { ProductId = 1 };
-            _productServiceMock.Setup(s => s.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
-            _productServiceMock.Setup(s => s.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(productDto);
-
-            // Act
-            var result = await _handler.Handle(command, CancellationToken.None);
-
-            // Assert
-            Assert.IsNotNull(result);
-            _productServiceMock.Verify(s => s.GetProductByIdAsync(It.IsAny<int>()), Times.Once);
-        }
-
-        [Test]
-        public async Task Handle_ShouldUpdateProduct_WhenDiscountIsNotNull()
-        {
-            // Arrange
-            var command = new CreateProductCommand
+            var product = new Product
             {
+                ProductId = 1,
                 Name = "Test Product",
                 Status = 1,
                 Stock = 10,
                 Description = "Test Description",
-                Price = 100m
+                Price = 100.0m
             };
 
-            var productDto = new ProductDto { ProductId = 1, Discount = 5m };
-            _productServiceMock.Setup(s => s.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
-            _productServiceMock.Setup(s => s.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(productDto);
-            _productServiceMock.Setup(s => s.UpdateProductAsync(It.IsAny<ProductDto>())).Returns(Task.CompletedTask);
+            var productDto = new ProductDto
+            {
+                ProductId = 1,
+                Name = "Test Product",
+                StatusName = "Active",
+                Stock = 10,
+                Description = "Test Description",
+                Price = 100.0m
+            };
+
+            _productServiceMock.Setup(x => x.AddProductAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
+            _apiMock.Setup(x => x.GetApiDataAsync(It.IsAny<string>())).ReturnsAsync((string)null);
+            _productServiceMock.Setup(x => x.MapProductToDto(It.IsAny<Product>())).ReturnsAsync(productDto);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);
-            _productServiceMock.Verify(s => s.UpdateProductAsync(It.IsAny<ProductDto>()), Times.Once);
+            Assert.AreEqual(productDto, result);
         }
     }
 }

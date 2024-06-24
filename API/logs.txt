@@ -82,3 +82,4 @@
 /api/Products/5 - 34,7526 ms
 /api/Products/5 - 1,1985 ms
 /api/Products/55 - 29904,9642 ms
+/api/Products/5 - 23460,4608 ms
