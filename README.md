@@ -67,9 +67,12 @@ Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
 ## Estructura
 Endpoints de la API
 - API/Controllers/ProductsController
-. CreateProduct
-. UpdateProduct
-. GetProductById
+
+-- CreateProduct
+
+-- UpdateProduct
+
+-- GetProductById
 
 Utilizando el patrón Mediator, lanzamos un evento que lo capturan los handlers.
 Por un lado tenemos los commands que realizan modificaciones en la información y por otro los querys.
