@@ -54,11 +54,11 @@ Se utiliza inyección de dependencias para la implementación del cache, por lo 
 En un ambiente distribuido de microservicios sería una buena solución utilizar Redis.
 
 ## Logs
-Se almacena en el archivo local 'logs.txt' el logueo con el tiempo de respuesta de las peticiones.
+Se almacena en el archivo local `logs.txt` el logueo con el tiempo de respuesta de las peticiones.
 La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
 ## Excepciones
-Se almacena en un archivo local 'exceptions' todas las excepciones junto con el stacktrace.
+Se almacena en un archivo local `exceptions.txt` todas las excepciones junto con el stacktrace.
 La implementación es por medio de un Middelware, por lo que es fácilmente remplazarlo por otro tipo de log.
 
 ## Validaciones de parámetros de entrada de los endpoints
@@ -68,11 +68,11 @@ Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
 Endpoints de la API
 - API/Controllers/ProductsController
 
--- CreateProduct
+- -- CreateProduct
 
--- UpdateProduct
+- -- UpdateProduct
 
--- GetProductById
+- -- GetProductById
 
 Utilizando el patrón Mediator, lanzamos un evento que lo capturan los handlers.
 Por un lado tenemos los commands que realizan modificaciones en la información y por otro los querys.

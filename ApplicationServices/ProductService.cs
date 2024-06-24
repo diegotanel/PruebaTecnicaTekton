@@ -1,6 +1,7 @@
 ﻿using Models;
 using LazyCache;
 using Repositories;
+using Shared.Cache;
 using Shared.DTOs;
 using Shared.Configs;
 
@@ -10,10 +11,10 @@ namespace ApplicationServices
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
-        private readonly IAppCache _cache;
+        private readonly ICache _cache;
         private readonly TimeSpan _cacheExpire;
 
-        public ProductService(IProductRepository repository, IAppCache cache)
+        public ProductService(IProductRepository repository, ICache cache)
         {
             _repository = repository;
             _cache = cache;

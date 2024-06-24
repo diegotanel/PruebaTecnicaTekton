@@ -6,6 +6,7 @@ using Shared.Middleware;
 using System.Reflection;
 using Shared.External;
 using Microsoft.OpenApi.Models;
+using Shared.Cache;
 using Shared.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,7 @@ builder.Services.AddDbContext<ProductContext>(o => o.UseSqlite(conn));
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IApiExterna, MockApi>();
+builder.Services.AddScoped<ICache, WrapperLazyCache>();
 builder.Services.AddLazyCache();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(ProductService))));
 MockApiUrl.Url = builder.Configuration.GetValue<string>("MockApiUrl:Url");
