@@ -38,7 +38,7 @@ namespace ApplicationServices.Products.Commands
             _productService = productService;
         }
 
-        async Task<ProductDto> IRequestHandler<UpdateProductCommand, ProductDto>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var productDto = await _productService.GetProductByIdAsync(request.ProductId);
 
