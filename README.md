@@ -68,11 +68,11 @@ Se ha utilizado los Data Annotations para validar datos enviados a los endpoints
 Endpoints de la API
 - API/Controllers/ProductsController
 
-- -- CreateProduct
+- - CreateProduct
 
-- -- UpdateProduct
+- - UpdateProduct
 
-- -- GetProductById
+- - GetProductById
 
 Utilizando el patrón Mediator, lanzamos un evento que lo capturan los handlers.
 Por un lado tenemos los commands que realizan modificaciones en la información y por otro los querys.
@@ -81,27 +81,27 @@ También tenemos un servicio de Dominio requerido para cumplir los casos de uso.
 
 - ApplicationServices
 
-- -- Queries
+- - Queries
 
-- --- GetProductByIdQuery
+- -- GetProductByIdQuery
 
-- -- Commands
+- - Commands
 
-- --- CreateProductCommands
+- -- CreateProductCommands
 
-- --- UpdateProductCommands
+- -- UpdateProductCommands
 
-- -- ProductService
+- - ProductService
 
 Los modelos son los que representan las entidades de negocio:
 - Models
 
-- -- Product
+- - Product
 
 La capa de base de datos se encuentra abstraida por medio de patrón Repositorio:
 - Repositories
 
-- -- ProductRepository
+- - ProductRepository
 
 Dentro del proyecto Shared se encuentra todo lo que es transversal a la solución:
 - Configs
