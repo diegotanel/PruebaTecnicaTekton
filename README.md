@@ -77,20 +77,28 @@ De esta forma, aplicamos el patron CQRS.
 También tenemos un servicio de Dominio requerido para cumplir los casos de uso.
 
 - ApplicationServices
-.. Queries
-... GetProductByIdQuery
-.. Commands
-... CreateProductCommands
-... UpdateProductCommands
-.. ProductService
+
+-- Queries
+
+--- GetProductByIdQuery
+
+-- Commands
+
+--- CreateProductCommands
+
+--- UpdateProductCommands
+
+-- ProductService
 
 Los modelos son los que representan las entidades de negocio:
 - Models
-.. Product
+
+-- Product
 
 La capa de base de datos se encuentra abstraida por medio de patrón Repositorio:
 - Repositories
-.. ProductRepository
+
+-- ProductRepository
 
 Dentro del proyecto Shared se encuentra todo lo que es transversal a la solución:
 - Configs
