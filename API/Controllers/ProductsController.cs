@@ -1,11 +1,7 @@
-﻿using ApplicationServices;
-using Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ApplicationServices.Products.Commands;
 using ApplicationServices.Products.Queries;
 using MediatR;
-using Shared.External.ApiClientLibrary;
-using System.Text.Json;
 using Shared.DTOs;
 
 namespace API.Controllers
@@ -40,7 +36,7 @@ namespace API.Controllers
         /// <summary>
         /// Actualiza un producto existente.
         /// </summary>
-        /// <param name="id">ID del producto.</param>
+        /// <param name="id">Id del producto.</param>
         /// <param name="command">Datos actualizados del producto.</param>
         /// <returns>Producto</returns>
         [HttpPut("{id}")]
@@ -62,7 +58,7 @@ namespace API.Controllers
         /// <summary>
         /// Obtiene un producto por ID.
         /// </summary>
-        /// <param name="id">ID del producto.</param>
+        /// <param name="id">Id del producto.</param>
         /// <returns>Producto</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]

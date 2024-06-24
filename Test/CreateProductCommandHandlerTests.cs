@@ -1,14 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using ApplicationServices;
 using ApplicationServices.Products.Commands;
-using LazyCache;
 using Models;
 using Moq;
-using NUnit.Framework;
 using Shared.DTOs;
 using Shared.External;
 
-namespace ApplicationServices.Tests.Products.Commands
+namespace Test
 {
     [TestFixture]
     public class CreateProductCommandHandlerTests

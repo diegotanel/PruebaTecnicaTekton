@@ -1,13 +1,6 @@
 ﻿using MediatR;
 using Models;
-using Repositories;
 using Shared.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shared.External.ApiClientLibrary;
 using Shared.External;
 using Shared.Configs;
 using System.ComponentModel.DataAnnotations;

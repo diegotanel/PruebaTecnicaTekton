@@ -1,4 +1,4 @@
-# ProductAPI
+# ProductosAPI
 
 ## Descripción
 API REST para la gestión de productos utilizando .NET 8, siguiendo principios SOLID y patrones de diseño CQRS.
@@ -20,6 +20,9 @@ Se ha separado las responsabilidades en distintas capas:
 - **TDD** para asegurar la calidad del código.
 - **Inyección de dependencias** para desacoplar los componentes por medio de Interfaces.
 - **Aspect-oriented programming (AOP)** para las responsabilidades transversales.
+
+## Clean code
+Se aplico Clean code en la solución. Se realizaron las verificaciones utilizando lint.
 
 ## Base de datos
 Se ha optado cómo base de datos SQLite, ya que para la prueba técnica se quiere tener la menor cantidad de dependencias posibles.
@@ -47,6 +50,7 @@ En este caso, se obtiene cómo respuesta un número del 1 al 99, que se utiliza 
 Se ha implementado LazyCache para conservar el producto en cache. 
 El tiempo de expiración esta configurado en 5 minutos.
 Se utiliza inyección de dependencias para la implementación del cache, por lo que es trivial cambiarlo por otro distinto.
+En un ambiente distribuido de microservicios sería una buena solución utilizar Redis.
 
 ## Logs
 Se almacena en un archivo local el logueo con el tiempo de respuesta de las peticiones.

@@ -1,7 +1,6 @@
 ﻿using Models;
 using LazyCache;
 using Repositories;
-using MediatR;
 using Shared.DTOs;
 using Shared.Configs;
 

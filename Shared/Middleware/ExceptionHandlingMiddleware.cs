@@ -1,42 +1,43 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
-public class ExceptionHandlingMiddleware
+namespace Shared.Middleware
 {
-    private readonly RequestDelegate _next;
-    private readonly string _file = "exceptions.txt";
-
-    public ExceptionHandlingMiddleware(RequestDelegate next)
+    public class ExceptionHandlingMiddleware
     {
-        _next = next;
-    }
+        private readonly RequestDelegate _next;
+        private readonly string _file = "exceptions.txt";
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
-            await _next(context);
+            _next = next;
         }
-        catch (Exception ex)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            await HandleExceptionAsync(context, ex);
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
         }
-    }
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        context.Response.StatusCode = 500;
-        context.Response.ContentType = "application/json";
-
-        var errorMessage = $"[{DateTime.Now}] {exception.Message}{Environment.NewLine}{exception.StackTrace}{Environment.NewLine}";
-        await File.AppendAllTextAsync(_file, errorMessage);
-
-        await context.Response.WriteAsync(new
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            StatusCode = context.Response.StatusCode,
-            Message = "Internal Server Error. The error has been logged."
-        }.ToString());
+            context.Response.StatusCode = 500;
+            context.Response.ContentType = "application/json";
+
+            var errorMessage =
+                $"[{DateTime.Now}] {exception.Message}{Environment.NewLine}{exception.StackTrace}{Environment.NewLine}";
+            await File.AppendAllTextAsync(_file, errorMessage);
+
+            await context.Response.WriteAsync(new
+            {
+                context.Response.StatusCode,
+                Message = "Internal Server Error. The error has been logged."
+            }.ToString());
+        }
     }
 }
