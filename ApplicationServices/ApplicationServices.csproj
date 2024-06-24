@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LazyCache" Version="2.4.0" />
-    <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
     <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
